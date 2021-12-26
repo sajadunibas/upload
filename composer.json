@@ -11,8 +11,5 @@
         "psr-4": {
             "Sajad\\Upload\\": "src/"
         }
-    },
-    "require": {
-        "illuminate/support": "^5"
     }
 }
