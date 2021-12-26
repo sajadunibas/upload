@@ -1,0 +1,18 @@
+{
+    "name": "sajadunibas/upload",
+    "description": "a simple package to upload",
+    "authors": [
+        {
+            "name": "sajad hosseinne zadeh",
+            "email": "slonz.st@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Sajad\\Upload\\": "src/"
+        }
+    },
+    "require": {
+        "illuminate/support": "^5"
+    }
+}
