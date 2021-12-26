@@ -8,7 +8,7 @@ use Sajad\Upload\Models\Upload as ModelUpload;
 
 class Upload
 {
-    private $file, $path, $disk, $model, $createData;
+    private $file, $path, $disk, $model, $createDataTable;
 
     public function __construct($model)
     {
@@ -38,13 +38,15 @@ class Upload
 
     public function create($createData)
     {
-        $this->createData = $createData;
+        $this->createDataTable = $createData;
 
         return $this;
     }
 
     public function save()
     {
+        $modelPk = app($this->model)->getKeyName();
+
         $disk = $this->disk ?? config('upload.disk');
         $path = $this->path ?? config('upload.path');
 
@@ -59,7 +61,7 @@ class Upload
             'path' => $path,
             'format' => File::extension($this->file->getClientOriginalName()),
             'size' => $this->file->getSize(),
-            'table_id' => $this->createData->id,
+            'table_id' => $this->createDataTable[$modelPk],
             'table_type' => $this->model,
         ];
 
@@ -68,9 +70,8 @@ class Upload
 
         $update = [app($this->model)::uploadColumnName() => $uploadModel['id']];
 
-        app($this->model)::where('id' , $this->createData->id)->update($update);
-
-
+        app($this->model)::where($modelPk , $this->createDataTable[$modelPk])->update($update);
+        
         return [];
     }
 
